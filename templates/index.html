@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Chatbot Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- Upload Section -->
+    <div class="upload-container">
+        <h2>Upload PDF Documents</h2>
+        <form id="upload-form" enctype="multipart/form-data">
+            <input type="file" name="file" accept="application/pdf" multiple required>
+            <button type="submit" class="upload-btn">Upload PDFs</button>
+        </form>
+        <p id="upload-status"></p>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <!-- Chat messages will appear here -->
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="chat-input" placeholder="Ask a question..." />
+            <button id="send-btn" class="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Handle file upload
+        document.getElementById("upload-form").addEventListener("submit", async function(e) {
+            e.preventDefault(); // Prevent the default form submission behavior
+            const formData = new FormData();
+            const files = document.querySelector('input[type="file"]').files; // Get all selected files
+            if (files.length === 0) return;  // Ensure there are files selected
+
+            // Append all selected files to the formData
+            for (const file of files) {
+                formData.append("files", file); // Use the same name as in Flask (files)
+            }
+
+            // Show uploading status
+            document.getElementById("upload-status").innerText = "Uploading PDFs...";
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData // Send the form data with files
+                });
+                const result = await response.json();
+                if (result.error) {
+                    document.getElementById("upload-status").innerText = `Error: ${result.error}`;
+                } else {
+                    document.getElementById("upload-status").innerText = result.message;
+                }
+            } catch (error) {
+                document.getElementById("upload-status").innerText = "Error uploading the file.";
+            }
+        });
+
+        // Handle chat interaction
+        document.getElementById("send-btn").addEventListener("click", sendMessage);
+        document.getElementById("chat-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const query = document.getElementById("chat-input").value;
+            if (!query) return;
+
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML += `<div class="chat-message user"><div class="bubble">${query}</div></div>`;
+            document.getElementById("chat-input").value = "";
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query })
+                });
+
+                const result = await response.json();
+                chatBox.innerHTML += `<div class="chat-message bot"><div class="bubble">${result.answer}</div></div>`;
+
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (error) {
+                chatBox.innerHTML += `<div class="chat-message bot"><div class="bubble">Error: Unable to get response.</div></div>`;
+            }
+        }
+    </script>
+
+</body>
+</html>

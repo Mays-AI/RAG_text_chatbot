@@ -1,0 +1,15 @@
+# PDF Chatbot Assistant
+This App allows users to upload PDF documents, process them to extract text, and interact with a chatbot that answers questions based on the content of the PDFs and using GPT model the chatbot generate the answers based on the document content.
+
+## Features:
+- Users can upload multiple PDF files.
+- Extracts text from PDF documents using PyMuPDF.
+- The extracted text is chunked and indexed using FAISS to enable fast similarity searches.
+- Users can ask questions, and the chatbot retrieves relevant text from the uploaded PDFs to generate answers using Azure OpenAI's GPT model (gpt-4o). 
+
+
+## Technologies Used:
+Flask: Web framework to serve the application.
+FAISS: Library for efficient similarity search and clustering of documents.
+PyMuPDF: Used for extracting text from PDFs.
+Azure OpenAI GPT: Used for generating chatbot responses using (gpt-4o) model based on document content. 

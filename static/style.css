@@ -1,0 +1,127 @@
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fc;
+}
+
+/* Container for the entire chatbot */
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+}
+
+/* Chatbox area */
+.chat-box {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Individual chat messages */
+.chat-message {
+    margin: 10px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+/* User message bubble */
+.chat-message.user {
+    justify-content: flex-end;
+}
+
+.chat-message .bubble {
+    max-width: 60%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* User bubble color */
+.chat-message.user .bubble {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Bot message bubble */
+.chat-message.bot .bubble {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+/* Input area for chat */
+.input-container {
+    display: flex;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Input box */
+#chat-input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Send button */
+.send-btn {
+    width: 15%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.send-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Upload section */
+.upload-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.upload-btn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background-color: #218838;
+}
+
+/* File input styling */
+.upload-container input[type="file"] {
+    margin-top: 10px;
+    font-size: 16px;
+}
